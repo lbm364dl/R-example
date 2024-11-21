@@ -1,3 +1,3 @@
 library("testthat")
 a <- 3
-b <- 4
+b <- 8
