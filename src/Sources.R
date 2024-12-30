@@ -1,5 +1,4 @@
 # Step 1: Authentication
-googlesheets4::gs4_deauth()
 googlesheets4::gs4_auth()
 
 # PART 1: sources_trade FOR TRADE
