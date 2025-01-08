@@ -17,6 +17,7 @@ count_column_occurrences <- function(df, column) {
     dplyr::count({{column}})
 }
 
+
 #' Count the number of occurrences of each value in the "sex" column of
 #' the dplyr::starwars dataset
 #'
