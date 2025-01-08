@@ -16,10 +16,7 @@ test_that("count_starwars_sexes gives correct count", {
 })
 
 test_that(
-  paste(
-    "count_column_ocurrences gives correct sex counts",
-    "for the starwars dataset"
-  ),
+  paste("count_column_ocurrences gives correct sex counts", "for the starwars dataset"),
   {
     expected_occurrences <- tibble::tibble(
       sex = c("female", "hermaphroditic", "male", "none", NA),
