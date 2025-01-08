@@ -4,7 +4,7 @@ library("testthat")
 # Used library https://testthat.r-lib.org/index.html
 
 test_that("multiplication works", {
-  expect_equal(2 * 2, 5)
+  expect_equal(2 * 2, 4)
 })
 
 test_that("count_starwars_sexes gives correct count", {
