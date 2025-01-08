@@ -18,3 +18,8 @@ and n, the number of occurrences
 \description{
 Count the number of occurrences of each value in the specified column
 }
+\examples{
+starwars_data <- dplyr::starwars
+count_column_occurrences(starwars_data, sex)
+count_column_occurrences(starwars_data, skin_color)
+}

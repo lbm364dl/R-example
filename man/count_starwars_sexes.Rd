@@ -15,3 +15,6 @@ and n, the number of occurrences
 Count the number of occurrences of each value in the "sex" column of
 the dplyr::starwars dataset
 }
+\examples{
+count_starwars_sexes()
+}

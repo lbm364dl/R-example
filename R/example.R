@@ -8,8 +8,9 @@
 #' @export
 #'
 #' @examples
-#' x <- "alfa,bravo,charlie,delta"
-#' strsplit1(x, split = ",")'
+#' starwars_data <- dplyr::starwars
+#' count_column_occurrences(starwars_data, sex)
+#' count_column_occurrences(starwars_data, skin_color)
 count_column_occurrences <- function(df, column) {
   df |>
     dplyr::select({{column}}) |>
@@ -24,8 +25,7 @@ count_column_occurrences <- function(df, column) {
 #' @export
 #'
 #' @examples
-#' x <- "alfa,bravo,charlie,delta"
-#' strsplit1(x, split = ",")'
+#' count_starwars_sexes()
 count_starwars_sexes <- function() {
   dplyr::starwars |>
     dplyr::select(sex) |>
