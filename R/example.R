@@ -1,17 +1,15 @@
-library("dplyr")
-
-starwars |>
-  select(sex) |>
-  count(sex) |>
+dplyr::starwars |>
+  dplyr::select(sex) |>
+  dplyr::count(sex) |>
   print(n = 30)
 
-starwars |>
-  filter(is.na(sex)) |>
+dplyr::starwars |>
+  dplyr::filter(is.na(sex)) |>
   print()
 
-starwars |>
-  filter(sex == "none") |>
+dplyr::starwars |>
+  dplyr::filter(sex == "none") |>
   print()
 
-starwars |>
-  mutate()
+dplyr::starwars |>
+  dplyr::mutate()
