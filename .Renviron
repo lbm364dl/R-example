@@ -1,1 +1,2 @@
 _R_CHECK_SYSTEM_CLOCK_=0
+GOOGLESHEETS_AUTH_FILE=google_cloud_key.json
