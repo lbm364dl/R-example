@@ -2,3 +2,4 @@
 
 export(count_column_occurrences)
 export(count_starwars_sexes)
+export(expand_trade_sources)
