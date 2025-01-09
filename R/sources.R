@@ -45,7 +45,6 @@ expand_trade_sources <- function(trade_sources) {
 
 
 # Step 1: Authentication
-googlesheets4::gs4_auth()
 sheet_url <- "1UdwgS87x5OsLjNuKaY3JA01GoI5nwsenz62JXCeq0GQ"
 
 # PART 1: trade_sources FOR TRADE
