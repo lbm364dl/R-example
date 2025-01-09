@@ -24,8 +24,11 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
+      - name: Check project root
+        run: echo "Project root is ${{ github.workspace }}"
+
       - name: Set googlesheets4 token
-        run: echo "${{ secrets.GOOGLE_CLOUD_KEY }}" > google_cloud_key.json
+        run: echo "${{ secrets.GOOGLE_CLOUD_KEY }}" > ${{ github.workspace }}/google_cloud_key.json
 
       - uses: r-lib/actions/check-r-package@v2
         with:
