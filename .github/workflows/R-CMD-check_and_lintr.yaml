@@ -15,7 +15,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      GOOGLESHEETS_AUTH_FILE: google_cloud_key.json
+      GOOGLE_CLOUD_KEY: ${{ secrets.GOOGLE_CLOUD_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +29,7 @@ jobs:
         run: echo "Project root is ${{ github.workspace }}"
 
       - name: Set googlesheets4 token
-        run: echo "${{ secrets.GOOGLE_CLOUD_KEY }}" > ${{ github.workspace }}/google_cloud_key.json
+        run: echo "$GOOGLE_CLOUD_KEY" > ${{ github.workspace }}/google_cloud_key.json
 
       - uses: r-lib/actions/check-r-package@v2
         with:
