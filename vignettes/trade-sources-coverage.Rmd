@@ -20,6 +20,7 @@ key_path <- here::here(Sys.getenv("GOOGLESHEETS_AUTH_FILE"))
 googlesheets4::gs4_auth(path = key_path)
 ```
 
+First we read the trade sources sheet and build a dataframe where each row accounts for one year.
 ```{r}
 # Step 1: Authentication
 sheet_url <- "1UdwgS87x5OsLjNuKaY3JA01GoI5nwsenz62JXCeq0GQ"
@@ -31,9 +32,13 @@ expanded_trade_sources <-
   sheet_url |>
   googlesheets4::read_sheet(sheet = "Final_Sources_Trade") |>
   expand_trade_sources()
+```
 
-# Plot showing years covered by sources_trade
-plot_sources_trade <- ggplot2::ggplot(
+Now we build some plots.
+
+Plot showing years covered by `expanded_trade_sources`:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources"}
+ggplot2::ggplot(
   expanded_trade_sources,
   ggplot2::aes(y = Trade, x = Year, fill = "lightblue")
 ) +
@@ -42,10 +47,11 @@ plot_sources_trade <- ggplot2::ggplot(
   ggplot2::labs(title = "Source Availability by Country") +
   ggplot2::scale_fill_identity() +
   ggplot2::facet_wrap(~Reporter, ncol = 1)
-plot_sources_trade
+```
 
-# Plot showing by years, colored by sources_trade
-plot_sources_trade_sources <- ggplot2::ggplot(
+Plot showing by years, colored by `expanded_trade_sources`:
+```{r, fig.alt="Plot showing by years, colored by expanded_trade_sources"}
+ggplot2::ggplot(
   expanded_trade_sources,
   ggplot2::aes(y = Trade, x = Year, fill = Name, alpha = .8)
 ) +
@@ -54,12 +60,12 @@ plot_sources_trade_sources <- ggplot2::ggplot(
   ggplot2::theme(legend.position = "None") +
   ggplot2::labs(title = "Source Availability by Country") +
   ggplot2::facet_grid(ImpExp ~ Reporter, scales = "free", space = "free_x")
-plot_sources_trade_sources
+```
 
-# Plot showing years covered by sources_trade, colored by quality
-plot_sources_trade_quality <- ggplot2::ggplot(
-  expanded_trade_sources,
-  ggplot2::aes(y = Trade, x = Year, alpha = .8)
+Plot showing years covered by `expanded_trade_sources`, colored by quality:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources, colored by quality"}
+ggplot2::ggplot(
+  expanded_trade_sources, ggplot2::aes(y = Trade, x = Year, alpha = .8)
 ) +
   ggplot2::geom_tile(ggplot2::aes(fill = factor(Quality))) +
   ggplot2::theme_dark() +
@@ -69,13 +75,11 @@ plot_sources_trade_quality <- ggplot2::ggplot(
     values = c("Bad" = "red", "Good" = "green", "Unknown" = "blue")
   ) +
   ggplot2::facet_grid(ImpExp ~ Reporter, scales = "free", space = "free_x")
-plot_sources_trade_quality
+```
 
-# Plot showing years covered by sources_trade, colored by scanned/not scanned
-plot_sources_trade_scanned <- ggplot2::ggplot(
-  expanded_trade_sources,
-  ggplot2::aes(y = Trade, x = Year)
-) +
+Plot showing years covered by `expanded_trade_sources`, colored by scanned/not scanned:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources, colored by scanned/not scanned"}
+ggplot2::ggplot(expanded_trade_sources, ggplot2::aes(y = Trade, x = Year)) +
   ggplot2::geom_tile(ggplot2::aes(fill = factor(Scanned), alpha = .8)) +
   ggplot2::theme_dark() +
   ggplot2::labs(title = "Scanned sources_trade by Country", fill = "Scanned") +
@@ -84,10 +88,11 @@ plot_sources_trade_scanned <- ggplot2::ggplot(
   ) +
   ggplot2::guides(alpha = "none") +
   ggplot2::facet_grid(ImpExp ~ Reporter, scales = "free", space = "free_x")
-plot_sources_trade_scanned
+```
 
-# Plot showing years covered by sources_trade, colored by whether or not in SACO
-plot_sources_trade_saco <- ggplot2::ggplot(
+Plot showing years covered by `expanded_trade_sources`, colored by whether or not in SACO:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources, colored by whether or not in SACO"}
+ggplot2::ggplot(
   expanded_trade_sources,
   ggplot2::aes(y = Trade, x = Year, alpha = .8)
 ) +
@@ -99,6 +104,4 @@ plot_sources_trade_saco <- ggplot2::ggplot(
     labels = c("0" = "No", "1" = "Yes"), values = c("0" = "red", "1" = "green")
   ) +
   ggplot2::facet_grid(ImpExp ~ Reporter, scales = "free", space = "free_x")
-plot_sources_trade_saco
 ```
-
