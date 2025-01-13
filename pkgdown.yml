@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  trade-sources-coverage: trade-sources-coverage.html
+last_built: 2025-01-13T11:37Z
+urls:
+  reference: https://lbm364dl.github.io/R-example/reference
+  article: https://lbm364dl.github.io/R-example/articles
