@@ -7,3 +7,5 @@ docs/
 .httr-oauth
 .DS_Store
 .quarto
+inst/google_cloud_key.json
+inst/doc
