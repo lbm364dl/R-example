@@ -2,12 +2,12 @@ library("testthat")
 
 test_that("trade source data is expanded from year range to single year rows", {
   trade_sources <- tibble::tibble(
-    Name = c("a", "b", "c"),
-    Trade = c("t1", "t2", "t3"),
-    Info_Format = c("year", "partial_series", "year"),
-    Timeline_Start = c(1, 1, 2),
-    Timeline_End = c(3, 4, 5),
-    Timeline_Freq = c(1, 1, 2),
+    Name = c("a", "b", "c", "d", "e"),
+    Trade = c("t1", "t2", "t3", NA, "t5"),
+    Info_Format = c("year", "partial_series", "year", "year", "year"),
+    Timeline_Start = c(1, 1, 2, 1, 3),
+    Timeline_End = c(3, 4, 5, 1, 2),
+    Timeline_Freq = c(1, 1, 2, 1, NA),
     `Imp/Exp` = "Imp",
     SACO_link = NA,
   )
@@ -28,6 +28,6 @@ test_that("trade source data is expanded from year range to single year rows", {
 
   expect_equal(
     dplyr::select(actual, Name, Trade, Info_Format, Year),
-    expected,
+    expected
   )
 })

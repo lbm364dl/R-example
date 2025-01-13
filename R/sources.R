@@ -22,8 +22,9 @@
 #' )
 #' expand_trade_sources(trade_sources)
 expand_trade_sources <- function(trade_sources) {
+  non_na_cols <- c("Trade", "Timeline_Start", "Timeline_End", "Timeline_Freq")
   trade_sources |>
-    dplyr::filter(is.na(Trade) == 0) |>
+    dplyr::filter(!.any_na_col(non_na_cols)) |>
     .expand_trade_years() |>
     dplyr::mutate(
       Name = dplyr::if_else(
@@ -41,4 +42,8 @@ expand_trade_sources <- function(trade_sources) {
     dplyr::group_by(No) |>
     tidyr::expand(Year = seq(Timeline_Start, Timeline_End, Timeline_Freq)) |>
     dplyr::inner_join(trade_sources, by = "No")
+}
+
+.any_na_col <- function(cols_to_check) {
+  dplyr::if_any(dplyr::all_of(cols_to_check), is.na)
 }
