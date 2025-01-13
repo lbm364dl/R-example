@@ -21,3 +21,4 @@ Suggests:
     googlesheets4
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://lbm364dl.github.io/R-example/
