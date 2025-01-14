@@ -1,5 +1,3 @@
-library(magrittr)
-
 #' Create a new dataframe where each row has a year range into one where each
 #' row is a single year, effectively 'expanding' the whole year range
 #'
@@ -34,10 +32,8 @@ expand_trade_sources <- function(trade_sources) {
       ),
       ImpExp = `Imp/Exp`,
       In_Saco = as.integer(!is.na(SACO_link)),
-    ) %>%
-    print() |>
-    tidyr::separate_rows(Reporter_ISO, sep = ", ") %>%
-    print() |>
+    ) |>
+    tidyr::separate_rows(Reporter_ISO, sep = ", ") |>
     tidyr::separate_rows(Trade, sep = ";")
 }
 
