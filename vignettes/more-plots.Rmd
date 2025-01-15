@@ -1,0 +1,64 @@
+---
+title: "Trade sources year coverage p2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Trade sources year coverage p2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(PackageExampleR)
+key_path <- here::here(Sys.getenv("GOOGLESHEETS_AUTH_FILE"))
+googlesheets4::gs4_auth(path = key_path)
+```
+
+First we read the trade sources sheet and build a dataframe where each row accounts for one year.
+```{r}
+# Step 1: Authentication
+sheet_url <- "1UdwgS87x5OsLjNuKaY3JA01GoI5nwsenz62JXCeq0GQ"
+
+# PART 1: trade_sources FOR TRADE
+
+# Step 2: Rest of Program
+expanded_trade_sources <-
+  sheet_url |>
+  googlesheets4::read_sheet(sheet = "Final_Sources_Trade") |>
+  expand_trade_sources()
+```
+
+Now we build some plots.
+
+Plot showing years covered by `expanded_trade_sources`:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources", fig.width=10,fig.height=5}
+ggplot2::ggplot(
+  expanded_trade_sources,
+  ggplot2::aes(y = Trade, x = Year, fill = "blue")
+) +
+  ggplot2::geom_tile(alpha = .8) +
+  ggplot2::theme_dark() +
+  ggplot2::labs(title = "Source Availability by Country") +
+  ggplot2::scale_fill_identity() +
+  ggplot2::facet_wrap(~Reporter, ncol = 1)
+```
+
+Plot showing years covered by `expanded_trade_sources`, colored by scanned/not scanned:
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources, colored by scanned/not scanned", fig.width=10,fig.height=5}
+ggplot2::ggplot(expanded_trade_sources, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Scanned), alpha = .8)) +
+  ggplot2::theme_dark() +
+  ggplot2::labs(title = "Scanned sources_trade by Country", fill = "Scanned") +
+  ggplot2::scale_fill_manual(
+    labels = c("0" = "No", "1" = "Yes"), values = c("0" = "red", "1" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+

@@ -19,6 +19,7 @@
 #'   Timeline_Freq = c(1, 1, 2),
 #'   `Imp/Exp` = "Imp",
 #'   SACO_link = NA,
+#'   Reporter_ISO = "DEU"
 #' )
 #' expand_trade_sources(trade_sources)
 expand_trade_sources <- function(trade_sources) {
