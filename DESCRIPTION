@@ -18,7 +18,9 @@ Suggests:
     tibble,
     ggplot2,
     here,
-    googlesheets4
+    googlesheets4,
+    rnaturalearth,
+    rnaturalearthdata
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://lbm364dl.github.io/R-example/

@@ -62,3 +62,62 @@ ggplot2::ggplot(expanded_trade_sources, ggplot2::aes(y = Trade, x = Year)) +
   ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
 ```
 
+Map showing years of coverage identified by `expanded_trade_sources` for total trade
+
+```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=10,fig.height=5, fig.align='center'}
+#Load Map
+world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+
+
+#Summarize Trade Dataset, by years covered total trade
+sources_trade_sum <- expanded_trade_sources |>
+  dplyr::group_by(Reporter_ISO) |>
+  dplyr::filter(Trade == "Total") |>
+  dplyr::summarize(Years = dplyr::n_distinct(Year))
+
+#join mapdata to trade summary
+world_data <- world |>
+  dplyr::left_join(sources_trade_sum, by = c("iso_a3_eh" = "Reporter_ISO"))
+
+#Chart Area
+xlims <- c(-120, 120)
+ylims <- c(-50, 70)
+ggplot2::ggplot(world_data) +
+  ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
+  #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
+  ggplot2::scale_fill_gradient(low = "#f5cbcb", high = "#acf2f0", na.value = "grey90", name = "Years") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
+  ggplot2::labs(title = "Years of Total Sources by Country") +
+  ggplot2::coord_sf(xlim = xlims, ylim = ylims, expand = FALSE)
+```
+
+Map showing years of coverage identified by `expanded_trade_sources` for total trade
+
+```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=7,fig.height=3}
+#Load Map
+world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+
+
+#Summarize Trade Dataset, by years covered bilateral trade
+sources_trade_sum <- expanded_trade_sources |>
+  dplyr::group_by(Reporter_ISO) |>
+  dplyr::filter(Trade == "Bilateral") |>
+  dplyr::summarize(Years = dplyr::n_distinct(Year))
+
+#join mapdata to trade summary
+world_data <- world |>
+  dplyr::left_join(sources_trade_sum, by = c("iso_a3_eh" = "Reporter_ISO"))
+
+#Chart Area
+xlims <- c(-180, 180)
+ylims <- c(-180, 180)
+ggplot2::ggplot(world_data) +
+  ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
+  #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
+  ggplot2::scale_fill_gradient(low = "#f5cbcb", high = "#acf2f0", na.value = "grey90", name = "Years") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
+  ggplot2::labs(title = "Years of Bilateral Sources by Country") +
+  ggplot2::coord_sf(xlim = xlims, ylim = ylims, expand = FALSE)
+```
