@@ -1,8 +1,8 @@
 ---
-title: "Trade sources year coverage p2"
+title: "Trade Sources Report for Marc"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Trade sources year coverage p2}
+  %\VignetteIndexEntry{Trade Sources Report for Marc}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -33,12 +33,15 @@ expanded_trade_sources <-
   expand_trade_sources()
 ```
 
-In the past months, the WHEP students have compiled a concise list of sources for 5 priority countries: France, the UK, Germany, China, and India. 
+In the past months, the WHEP students have compiled a concise list of sources for 5 priority countries: France, the UK, the US, Germany, and China. 
+
 The sources found focus on two types of trade:
+
 - Complete series for total trade by product, in physical terms
+
 - Benchmark years for bilateral trade by product, in physical or monetary terms
 
-Below, we visualize the coverage of each type for each country so far:
+Below, we visualize the coverage of bilateral trade sources for each country so far:
 
 ```{r, fig.alt="Plot showing years covered by expanded_trade_sources", fig.width=10,fig.height=5, echo=FALSE}
 ggplot2::ggplot(
@@ -51,7 +54,6 @@ ggplot2::ggplot(
   ggplot2::scale_fill_identity() +
   ggplot2::facet_wrap(~Reporter, ncol = 1)
 ```
-
 
 Here we show the geographical coverage of the sources identified for total trade:
 
@@ -76,7 +78,7 @@ ylims <- c(-50, 70)
 ggplot2::ggplot(world_data) +
   ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
   #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
-  ggplot2::scale_fill_gradient(low = "#5b52ff", high = "#00ff51", na.value = "grey90", name = "Years") +
+  ggplot2::scale_fill_gradient(low = "#FFE9AD", high = "#8EFAA8", na.value = "grey90", name = "Years") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
   ggplot2::labs(title = "Years of Total Sources by Country") +
@@ -106,7 +108,7 @@ ylims <- c(-50, 70)
 ggplot2::ggplot(world_data) +
   ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
   #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
-  ggplot2::scale_fill_gradient(low = "#5b52ff", high = "#00ff51", na.value = "grey90", name = "Years") +
+  ggplot2::scale_fill_gradient(low = "#FFE9AD", high = "#8EFAA8", na.value = "grey90", name = "Years") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
   ggplot2::labs(title = "Years of Bilateral Sources by Country") +
@@ -122,8 +124,8 @@ expanded_trade_sources_UK <- expanded_trade_sources |>
   dplyr::filter(Reporter_ISO == "GBR")
 ggplot2::ggplot(expanded_trade_sources_UK, ggplot2::aes(y = Trade, x = Year)) +
   ggplot2::geom_tile(ggplot2::aes(fill = factor(Scanned), alpha = .8)) +
-  ggplot2::theme_dark() +
-  ggplot2::labs(title = "Scanned sources_trade by Country", fill = "Scanned") +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "Source Coverage for UK", fill = "Scanned") +
   ggplot2::scale_fill_manual(
     labels = c("0" = "No", "1" = "Yes"), values = c("0" = "red", "1" = "green")
   ) +
@@ -131,7 +133,86 @@ ggplot2::ggplot(expanded_trade_sources_UK, ggplot2::aes(y = Trade, x = Year)) +
   ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
 ```
 
+```{r, fig.alt="Source Coverage for UK, Access or no Access", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_GBR <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "GBR")
+ggplot2::ggplot(expanded_trade_sources_GBR, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Access), alpha = .8)) +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "UK Trade Sources", fill = "Access") +
+  ggplot2::scale_fill_manual(
+    values = c("No" = "red", "Yes" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+
 For the United Kingdom, we’ll use three major sources to reconstruct the bilateral trade. First, for total trade we will use the **Statistical Abstracts**, yearly publications from 1840-present which include 14-year sets of total trade data. This was easy to scan with Textract due to its high quality and is in the process of being converted to FAOSTAT categories. For bilateral, we will use the **CUST8 and CUST4 export and import ledgers** for benchmark years 1800 to 1899, and the **Trade and Navigation Accounts** for benchmarks from 1900 to 1960. The latter sources have low quality in certain years, so this strategy may change based on OCR results. 
 
-hello
+```{r, fig.alt="Source Coverage for France, Access or no Access", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_FRA <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "FRA")
+ggplot2::ggplot(expanded_trade_sources_FRA, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Access), alpha = .8)) +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "French Trade Sources", fill = "Access") +
+  ggplot2::scale_fill_manual(
+    values = c("No" = "red", "Yes" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
 
+For France, the primary source of data for analyzing total trade will be the **'Tableau général du commerce de la France avec ses colonies et les puissances étrangères' (1834 to 1896)**. This publications provides physical trade statistics in six-year intervals, covering the trade between France, its colonies, and other foreign powers. To address gaps in the data, the **'Tableau général du commerce et de la navigation'** of 1900 will be utilized.
+
+Regarding bilateral trade, the principal source will be the **'Tableau décennal du commerce de la France avec ses colonies et les puissances étrangères' (1827 to 1886)**, which offers both physical and monetary statistics at ten-year intervals. To fill in missing data points, reference will be made to the **'Tableau général du commerce and the Tableau général du commerce et de la navigation'**, which are available online up to 1926. For this type of data, a significant limitation lies in the unavailability of accessible online documents for the period between 1927 and 1962.
+
+```{r, fig.alt="Source Coverage for the United States of America, Access or no Access", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_USA <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "USA")
+ggplot2::ggplot(expanded_trade_sources_USA, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Access), alpha = .8)) +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "USA Trade Sources", fill = "Access") +
+  ggplot2::scale_fill_manual(
+    values = c("No" = "red", "Yes" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+
+In the case of the United States, most of the data comes from the **Statistical Abstract of the United States** from various years, as well as the **Statistical Abstract of Foreign Trade with Countries**. Key pages have been identified and downloaded but no automated extraction has been applied. All documents are accessible online and have been deposited in the SACO folder. One of the issues identified is that, for some years, data is not available for all products but only for the most relevant ones. Notes from the yearbooks can be found in SACO.
+
+```{r, fig.alt="Source Coverage for China, Access or no Access", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_CHN <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "CHN")
+ggplot2::ggplot(expanded_trade_sources_CHN, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Access), alpha = .8)) +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "China Trade Sources", fill = "Access") +
+  ggplot2::scale_fill_manual(
+    values = c("No" = "red", "Yes" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+
+For China's trade data reconstruction, we'll use multiple sources: **China's Foreign Trade Statistics, 1864–1949** by Hsiao L. for the pre-1950 period, supplemented by Crook's **China international agriculture and trade situation and outlook 1997** USDA report and the Colby et al. (1992) **Agricultural Statistics of the People's Republic of China, 1949-90**. These sources provide comprehensive physical trade figures. The digitized documents are available in SACO and online, with key challenges including data consistency across different sources and periods and lacking physical measures for some products. 
+
+```{r, fig.alt="Source Coverage for France, Access or no Access", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_DEU <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "DEU")
+ggplot2::ggplot(expanded_trade_sources_DEU, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Access), alpha = .8)) +
+  # ggplot2::theme_classic() +
+  ggplot2::labs(title = "Germany Trade Sources", fill = "Access") +
+  ggplot2::scale_fill_manual(
+    values = c("No" = "red", "Yes" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+
+The primary source of trade data is the **Statistisches Bundesamt (Federal Statistical Office of Germany)**. Between 1878 and 1940, as well as 1950–1952, bilateral trade data for various food items and trading partner countries are available for each year. The earlier yearbooks primarily include bilateral trade with countries such as Russia, the Netherlands, Belgium, Denmark, Austria, Switzerland, and France. Total trade for different food items is available from 1859 to 1940. The source documents are digitized in PDF format; however, no automated extraction has been applied. All documents are accessible online and have been deposited in the SACO folder. Notably, there are gaps in the data for the years 1916–1920. 
+
+Sources have also been identified for India, Egypt, and Canada, but have not seen as significant of progress. 
