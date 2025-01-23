@@ -1,2 +1,2 @@
 pkgdown::build_site()
-rmarkdown::render("vignettes/more-plots.Rmd")
+pkgdown::build_articles()

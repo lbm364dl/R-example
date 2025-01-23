@@ -14,14 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, echo=FALSE}
 library(PackageExampleR)
 key_path <- here::here(Sys.getenv("GOOGLESHEETS_AUTH_FILE"))
 googlesheets4::gs4_auth(path = key_path)
 ```
 
-First we read the trade sources sheet and build a dataframe where each row accounts for one year.
-```{r}
+```{r, echo=FALSE}
 # Step 1: Authentication
 sheet_url <- "1UdwgS87x5OsLjNuKaY3JA01GoI5nwsenz62JXCeq0GQ"
 
@@ -34,10 +33,14 @@ expanded_trade_sources <-
   expand_trade_sources()
 ```
 
-Now we build some plots.
+In the past months, the WHEP students have compiled a concise list of sources for 5 priority countries: France, the UK, Germany, China, and India. 
+The sources found focus on two types of trade:
+- Complete series for total trade by product, in physical terms
+- Benchmark years for bilateral trade by product, in physical or monetary terms
 
-Plot showing years covered by `expanded_trade_sources`:
-```{r, fig.alt="Plot showing years covered by expanded_trade_sources", fig.width=10,fig.height=5}
+Below, we visualize the coverage of each type for each country so far:
+
+```{r, fig.alt="Plot showing years covered by expanded_trade_sources", fig.width=10,fig.height=5, echo=FALSE}
 ggplot2::ggplot(
   expanded_trade_sources,
   ggplot2::aes(y = Trade, x = Year, fill = "blue")
@@ -49,22 +52,10 @@ ggplot2::ggplot(
   ggplot2::facet_wrap(~Reporter, ncol = 1)
 ```
 
-Plot showing years covered by `expanded_trade_sources`, colored by scanned/not scanned:
-```{r, fig.alt="Plot showing years covered by expanded_trade_sources, colored by scanned/not scanned", fig.width=10,fig.height=5}
-ggplot2::ggplot(expanded_trade_sources, ggplot2::aes(y = Trade, x = Year)) +
-  ggplot2::geom_tile(ggplot2::aes(fill = factor(Scanned), alpha = .8)) +
-  ggplot2::theme_dark() +
-  ggplot2::labs(title = "Scanned sources_trade by Country", fill = "Scanned") +
-  ggplot2::scale_fill_manual(
-    labels = c("0" = "No", "1" = "Yes"), values = c("0" = "red", "1" = "green")
-  ) +
-  ggplot2::guides(alpha = "none") +
-  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
-```
 
-Map showing years of coverage identified by `expanded_trade_sources` for total trade
+Here we show the geographical coverage of the sources identified for total trade:
 
-```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=10,fig.height=5, fig.align='center'}
+```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=10,fig.height=5, fig.align='center', echo=FALSE}
 #Load Map
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
 
@@ -85,16 +76,16 @@ ylims <- c(-50, 70)
 ggplot2::ggplot(world_data) +
   ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
   #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
-  ggplot2::scale_fill_gradient(low = "#f5cbcb", high = "#acf2f0", na.value = "grey90", name = "Years") +
+  ggplot2::scale_fill_gradient(low = "#5b52ff", high = "#00ff51", na.value = "grey90", name = "Years") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
   ggplot2::labs(title = "Years of Total Sources by Country") +
   ggplot2::coord_sf(xlim = xlims, ylim = ylims, expand = FALSE)
 ```
 
-Map showing years of coverage identified by `expanded_trade_sources` for total trade
+Here we show the geographical coverage of the sources identified for bilateral trade:
 
-```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=7,fig.height=3}
+```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=10,fig.height=5,echo=FALSE}
 #Load Map
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
 
@@ -110,14 +101,37 @@ world_data <- world |>
   dplyr::left_join(sources_trade_sum, by = c("iso_a3_eh" = "Reporter_ISO"))
 
 #Chart Area
-xlims <- c(-180, 180)
-ylims <- c(-180, 180)
+xlims <- c(-120, 120)
+ylims <- c(-50, 70)
 ggplot2::ggplot(world_data) +
   ggplot2::geom_sf(ggplot2::aes(fill = Years), color = "white") +
   #ggplot2::geom_text(ggplot2::aes(label = Years, x = label_x,y = label_y)) +
-  ggplot2::scale_fill_gradient(low = "#f5cbcb", high = "#acf2f0", na.value = "grey90", name = "Years") +
+  ggplot2::scale_fill_gradient(low = "#5b52ff", high = "#00ff51", na.value = "grey90", name = "Years") +
   ggplot2::theme_minimal() +
   ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank()) +
   ggplot2::labs(title = "Years of Bilateral Sources by Country") +
   ggplot2::coord_sf(xlim = xlims, ylim = ylims, expand = FALSE)
 ```
+
+We've also begun the process of scanning documents with the OCR program organized by Catalin. So far, 
+we've tested this on the UK sources, digitizing the Statistical Abstract from 1840-1896.
+
+Plot showing digitization of UK sources:
+```{r, fig.alt="Source Coverage for UK, Scanned or not Scanned", fig.width=10,fig.height=5, echo=FALSE}
+expanded_trade_sources_UK <- expanded_trade_sources |>
+  dplyr::filter(Reporter_ISO == "GBR")
+ggplot2::ggplot(expanded_trade_sources_UK, ggplot2::aes(y = Trade, x = Year)) +
+  ggplot2::geom_tile(ggplot2::aes(fill = factor(Scanned), alpha = .8)) +
+  ggplot2::theme_dark() +
+  ggplot2::labs(title = "Scanned sources_trade by Country", fill = "Scanned") +
+  ggplot2::scale_fill_manual(
+    labels = c("0" = "No", "1" = "Yes"), values = c("0" = "red", "1" = "green")
+  ) +
+  ggplot2::guides(alpha = "none") +
+  ggplot2::facet_grid(Reporter ~ ImpExp, scales = "free", space = "free_y")
+```
+
+For the United Kingdom, we’ll use three major sources to reconstruct the bilateral trade. First, for total trade we will use the **Statistical Abstracts**, yearly publications from 1840-present which include 14-year sets of total trade data. This was easy to scan with Textract due to its high quality and is in the process of being converted to FAOSTAT categories. For bilateral, we will use the **CUST8 and CUST4 export and import ledgers** for benchmark years 1800 to 1899, and the **Trade and Navigation Accounts** for benchmarks from 1900 to 1960. The latter sources have low quality in certain years, so this strategy may change based on OCR results. 
+
+hello
+
