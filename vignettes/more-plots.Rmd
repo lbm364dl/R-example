@@ -57,7 +57,7 @@ ggplot2::ggplot(
 
 Here we show the geographical coverage of the sources identified for total trade:
 
-```{r, fig.alt="Map showing years of coverage identified by `expanded_trade_sources` for total trade", fig.width=10,fig.height=5, fig.align='center', echo=FALSE}
+```{r, fig.alt="Map showing years of coverage identified by expanded_trade_sources for total trade", fig.width=10,fig.height=5, fig.align='center', echo=FALSE}
 #Load Map
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
 
