@@ -32,5 +32,4 @@ trade_sources <- tibble::tibble(
   Reporter_ISO = "DEU"
 )
 expand_trade_sources(trade_sources)
-When adding new mutate column, make sure to add in all tests
 }
