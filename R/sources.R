@@ -22,7 +22,8 @@
 #'   Reporter_ISO = "DEU"
 #' )
 #' expand_trade_sources(trade_sources)
-#' When adding new mutate column, make sure to add in all tests
+
+# When adding new mutate column, make sure to add in all tests
 expand_trade_sources <- function(trade_sources) {
   non_na_cols <- c("Trade", "Timeline_Start", "Timeline_End", "Timeline_Freq")
   trade_sources |>
