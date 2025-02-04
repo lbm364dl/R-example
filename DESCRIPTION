@@ -2,7 +2,7 @@ Package: PackageExampleR
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Alvaro", "Alvarez Redondo", , "alvaro.alvarez@cchs.csic.es", role = c("aut", "cre"))
+    person("Alvaro", "Alvarez", , "alvaro.alvarez@cchs.csic.es", role = c("aut", "cre"))
     person("Luis", "Lassaletta", , "luis.lassaletta@upm.es", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
