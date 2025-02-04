@@ -4,3 +4,4 @@ utils::globalVariables(c(
   "Timeline_Freq", "Info_Format", "SACO_link", "Imp/Exp",
   "Name", "Year", "Reporter_ISO"
 ))
+library("styler")
