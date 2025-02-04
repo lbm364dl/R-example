@@ -1,4 +1,5 @@
 Version: 1.0
+ProjectId: cf9b3679-15e1-4b0c-96d5-55c54630aaf8
 
 RestoreWorkspace: Default
 SaveWorkspace: Default
@@ -11,3 +12,7 @@ Encoding: UTF-8
 
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
+
+BuildType: Package
+PackageUseDevtools: Yes
+PackageInstallArgs: --no-multiarch --with-keep.source
