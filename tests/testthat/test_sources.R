@@ -10,6 +10,7 @@ test_that("trade source data is expanded from year range to single year rows", {
     Timeline_Freq = c(1, 1, 2, 1, NA),
     `Imp/Exp` = "Imp",
     SACO_link = NA,
+    Reporter_ISO = NA
   )
   expected <- tibble::tibble(
     Name = c("a_1", "a_2", "a_3", "b", "b", "b", "b", "c_2", "c_4"),
@@ -28,6 +29,68 @@ test_that("trade source data is expanded from year range to single year rows", {
 
   expect_equal(
     dplyr::select(actual, Name, Trade, Info_Format, Year),
+    expected
+  )
+})
+
+test_that("trade source data is expanded from combined Trade row to single trade rows", {
+  trade_sources <- tibble::tibble(
+    Name = "a",
+    Reporter_ISO = "DEU",
+    Trade = c("t1;t2"),
+    Info_Format = "year",
+    Timeline_Start = 1,
+    Timeline_End = 1,
+    Timeline_Freq = 1,
+    `Imp/Exp` = "Imp",
+    SACO_link = NA,
+  )
+  expected <- tibble::tibble(
+    Name = c("a_1", "a_1"),
+    Reporter_ISO = "DEU",
+    Trade = c("t1", "t2"),
+    Info_Format = "year",
+    Year = 1
+  )
+
+  actual <-
+    trade_sources |>
+    expand_trade_sources() |>
+    dplyr::ungroup()
+
+  expect_equal(
+    dplyr::select(actual, Name, Reporter_ISO, Trade, Info_Format, Year),
+    expected
+  )
+})
+
+test_that("trade source data is expanded from year range to single year rows", {
+  trade_sources <- tibble::tibble(
+    Name = "a",
+    Reporter_ISO = "DEU, FRA",
+    Trade = "t1",
+    Info_Format = "year",
+    Timeline_Start = 1,
+    Timeline_End = 1,
+    Timeline_Freq = 1,
+    `Imp/Exp` = "Imp",
+    SACO_link = NA,
+  )
+  expected <- tibble::tibble(
+    Name = c("a_1", "a_1"),
+    Reporter_ISO = c("DEU", "FRA"),
+    Trade = "t1",
+    Info_Format = "year",
+    Year = 1
+  )
+
+  actual <-
+    trade_sources |>
+    expand_trade_sources() |>
+    dplyr::ungroup()
+
+  expect_equal(
+    dplyr::select(actual, Name, Reporter_ISO, Trade, Info_Format, Year),
     expected
   )
 })

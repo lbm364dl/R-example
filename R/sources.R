@@ -19,8 +19,11 @@
 #'   Timeline_Freq = c(1, 1, 2),
 #'   `Imp/Exp` = "Imp",
 #'   SACO_link = NA,
+#'   Reporter_ISO = "DEU"
 #' )
 #' expand_trade_sources(trade_sources)
+
+# When adding new mutate column, make sure to add in all tests
 expand_trade_sources <- function(trade_sources) {
   non_na_cols <- c("Trade", "Timeline_Start", "Timeline_End", "Timeline_Freq")
   trade_sources |>
@@ -32,7 +35,9 @@ expand_trade_sources <- function(trade_sources) {
       ),
       ImpExp = `Imp/Exp`,
       In_Saco = as.integer(!is.na(SACO_link)),
-    )
+    ) |>
+    tidyr::separate_rows(Reporter_ISO, sep = ", ") |>
+    tidyr::separate_rows(Trade, sep = ";")
 }
 
 .expand_trade_years <- function(trade_sources) {
