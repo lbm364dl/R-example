@@ -1,0 +1,43 @@
+---
+title: "Vignette example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(PackageExampleR)
+```
+
+In this tutorial we will see how different animals say `Hello world!`.
+
+First, we can see the cow:
+```{r}
+"cow" |>
+  my_hello_world() |>
+  cat()
+```
+
+Then we have the whale:
+```{r}
+"whale" |>
+  my_hello_world() |>
+  cat()
+```
+
+Finally, this is the stegosaurus:
+Then we have the whale:
+```{r}
+"stegosaurus" |>
+  my_hello_world() |>
+  cat()
+```

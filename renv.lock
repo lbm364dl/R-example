@@ -283,6 +283,17 @@
       "Repository": "CRAN",
       "Hash": "14eb0596f987c71535d07c3aff814742"
     },
+    "cowsay": {
+      "Package": "cowsay",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "crayon",
+        "rlang"
+      ],
+      "Hash": "c6d1ce48e53f1326c238618287832926"
+    },
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.5.1",
