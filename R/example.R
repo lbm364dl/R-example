@@ -11,7 +11,7 @@
 #' starwars_data <- dplyr::starwars
 #' count_column_occurrences(starwars_data, sex)
 #' count_column_occurrences(starwars_data, skin_color)
-count_column_occurrences <- function(df, column) {
+count_column_occurrences <- function(df, column){
   df |>
     dplyr::select({{column}}) |>
     dplyr::count({{column}})
